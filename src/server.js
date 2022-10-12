@@ -2,9 +2,13 @@ import express from "express";
 import morgan from "morgan";
 import apiRouter from "./routers/apiRouter";
 
-const PORT = 4000;
+const PORT = 5000;
 const app = express();
+
+// app.set("view engine", "json");
 app.use(morgan("dev"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const handleHome = (req, res) => res.send("home");
 
