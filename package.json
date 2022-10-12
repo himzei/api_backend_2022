@@ -1,3 +1,27 @@
 {
-  "name": "api_backend"
+  "name": "api_backend",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "nodemon --exec babel-node src/server.js "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/himzei/api_backend_2022.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/himzei/api_backend_2022/issues"
+  },
+  "homepage": "https://github.com/himzei/api_backend_2022#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.19.3",
+    "@babel/node": "^7.19.1",
+    "@babel/preset-env": "^7.19.4",
+    "nodemon": "^2.0.20"
+  }
 }
