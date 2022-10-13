@@ -1,11 +1,13 @@
 import express from "express";
 import morgan from "morgan";
+import cors from "cors";
 import apiRouter from "./routers/apiRouter";
 
-const PORT = 5000;
+const PORT = 4000;
 const app = express();
 
 // app.set("view engine", "json");
+app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

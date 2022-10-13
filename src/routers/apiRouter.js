@@ -1,8 +1,18 @@
 import express from "express";
-import { handleApi } from "../controllers/apiController";
+import {
+  itemNewAll,
+  itemNewSpecial,
+  itemEditorChoice,
+  bestseller,
+  blogBest,
+} from "../controllers/apiController";
 
 const apiRouter = express.Router();
 
-apiRouter.get("/", handleApi);
+apiRouter.get("/itemNewAll", itemNewAll);
+apiRouter.get("/itemNewSpecial", itemNewSpecial);
+apiRouter.get("/itemEditorChoice", itemEditorChoice);
+apiRouter.get("/bestseller", bestseller);
+apiRouter.get("/blogBest", blogBest);
 
-export default handleApi;
+export default apiRouter;
