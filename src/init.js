@@ -3,7 +3,6 @@ import morgan from "morgan";
 import cors from "cors";
 import apiRouter from "./routers/apiRouter";
 
-const PORT = 4000;
 const app = express();
 
 // app.set("view engine", "json");
@@ -20,4 +19,4 @@ app.use("/api/v1", apiRouter);
 const handleListening = () =>
   console.log(`Server listening on port http://localhost:${PORT}`);
 
-app.listen(PORT, handleListening);
+app.listen(process.env.PORT || 3000, handleListening);
