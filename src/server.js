@@ -3,7 +3,7 @@ import morgan from "morgan";
 import cors from "cors";
 import apiRouter from "./routers/apiRouter";
 
-const PORT = 4000;
+const PORT = 5000;
 const app = express();
 
 // app.set("view engine", "json");

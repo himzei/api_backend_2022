@@ -5,7 +5,7 @@ var _morgan = _interopRequireDefault(require("morgan"));
 var _cors = _interopRequireDefault(require("cors"));
 var _apiRouter = _interopRequireDefault(require("./routers/apiRouter"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-var PORT = 4000;
+var PORT = 5000;
 var app = (0, _express["default"])();
 
 // app.set("view engine", "json");
