@@ -1,5 +1,4 @@
 import axios from "axios";
-import { response } from "express";
 
 // ItemNewAll : 신간 전체 리스트
 // ItemNewSpecial : 주목할 만한 신간 리스트
@@ -10,12 +9,15 @@ import { response } from "express";
 
 const TTB_KEY = "ttbhimzei1056003";
 const BASE_URL = `http://www.aladin.co.kr/ttb/api/ItemList.aspx`;
+const BOOK_DETAIL_URL = `http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx`;
+const BOOK_SEARCH_URL = `http://www.aladin.co.kr/ttb/api/ItemSearch.aspx`;
 // 리스트 수
-const RESUSTS = 10;
+const RESUSTS = 7;
 
 export const itemNewAll = (req, res) => {
   const QUERY_TYPE = "ItemNewAll";
-  const END_POINT = `${BASE_URL}?ttbkey=${TTB_KEY}&QueryType=${QUERY_TYPE}&MaxResults=${RESUSTS}&start=1&SearchTarget=Book&output=JS&Version=20131101`;
+  const IMG_SIZE = "big";
+  const END_POINT = `${BASE_URL}?ttbkey=${TTB_KEY}&cover=${IMG_SIZE}&QueryType=${QUERY_TYPE}&MaxResults=${RESUSTS}&start=1&SearchTarget=Book&output=JS&Version=20131101&OptResult=ratingInfo`;
   axios({
     method: "get",
     url: END_POINT,
@@ -24,16 +26,8 @@ export const itemNewAll = (req, res) => {
 
 export const itemNewSpecial = (req, res) => {
   const QUERY_TYPE = "ItemNewSpecial";
-  const END_POINT = `${BASE_URL}?ttbkey=${TTB_KEY}&QueryType=${QUERY_TYPE}&MaxResults=${RESUSTS}&start=1&SearchTarget=Book&output=JS&Version=20131101`;
-  axios({
-    method: "get",
-    url: END_POINT,
-  }).then((response) => res.send(response.data.item));
-};
-
-export const itemEditorChoice = (req, res) => {
-  const QUERY_TYPE = "ItemEditorChoice";
-  const END_POINT = `${BASE_URL}?ttbkey=${TTB_KEY}&QueryType=${QUERY_TYPE}&MaxResults=${RESUSTS}&start=1&SearchTarget=Book&output=JS&Version=20131101`;
+  const IMG_SIZE = "big";
+  const END_POINT = `${BASE_URL}?ttbkey=${TTB_KEY}&cover=${IMG_SIZE}&QueryType=${QUERY_TYPE}&MaxResults=${RESUSTS}&start=1&SearchTarget=Book&output=JS&Version=20131101`;
   axios({
     method: "get",
     url: END_POINT,
@@ -42,7 +36,40 @@ export const itemEditorChoice = (req, res) => {
 
 export const bestseller = (req, res) => {
   const QUERY_TYPE = "Bestseller";
-  const END_POINT = `${BASE_URL}?ttbkey=${TTB_KEY}&QueryType=${QUERY_TYPE}&MaxResults=${RESUSTS}&start=1&SearchTarget=Book&output=JS&Version=20131101`;
+  const IMG_SIZE = "big";
+  const END_POINT = `${BASE_URL}?ttbkey=${TTB_KEY}&cover=${IMG_SIZE}&QueryType=${QUERY_TYPE}&MaxResults=${RESUSTS}&start=1&SearchTarget=Book&output=JS&Version=20131101`;
+  axios({
+    method: "get",
+    url: END_POINT,
+  }).then((response) => res.send(response.data.item));
+};
+
+export const bestsellerLastMonth = (req, res) => {
+  // this week 구하기
+  const today = new Date();
+  const QUERY_TYPE = "Bestseller";
+  const IMG_SIZE = "big";
+  const YEAR = today.getFullYear();
+  const MONTH = today.getMonth();
+  const WEEK = "1";
+
+  const END_POINT = `${BASE_URL}?ttbkey=${TTB_KEY}&cover=${IMG_SIZE}&QueryType=${QUERY_TYPE}&MaxResults=${RESUSTS}&start=1&SearchTarget=Book&output=JS&Year=${YEAR}&Month=${MONTH}&Week=${WEEK}&Version=20131101`;
+  axios({
+    method: "get",
+    url: END_POINT,
+  }).then((response) => res.send(response.data.item));
+};
+
+export const bestsellerLastYear = (req, res) => {
+  // this week 구하기
+  const today = new Date();
+  const QUERY_TYPE = "Bestseller";
+  const IMG_SIZE = "big";
+  const YEAR = today.getFullYear() - 1;
+  const MONTH = "12";
+  const WEEK = "1";
+
+  const END_POINT = `${BASE_URL}?ttbkey=${TTB_KEY}&cover=${IMG_SIZE}&QueryType=${QUERY_TYPE}&MaxResults=${RESUSTS}&start=1&SearchTarget=Book&output=JS&Year=${YEAR}&Month=${MONTH}&Week=${WEEK}&Version=20131101`;
   axios({
     method: "get",
     url: END_POINT,
@@ -51,7 +78,106 @@ export const bestseller = (req, res) => {
 
 export const blogBest = (req, res) => {
   const QUERY_TYPE = "BlogBest";
-  const END_POINT = `${BASE_URL}?ttbkey=${TTB_KEY}&QueryType=${QUERY_TYPE}&MaxResults=${RESUSTS}&start=1&SearchTarget=Book&output=JS&Version=20131101`;
+  const IMG_SIZE = "big";
+  const END_POINT = `${BASE_URL}?ttbkey=${TTB_KEY}&cover=${IMG_SIZE}&QueryType=${QUERY_TYPE}&MaxResults=${RESUSTS}&start=1&SearchTarget=Book&output=JS&Version=20131101`;
+  axios({
+    method: "get",
+    url: END_POINT,
+  }).then((response) => res.send(response.data.item));
+};
+
+export const bookDetail = (req, res) => {
+  const { id: ISBN } = req.params;
+  const IMG_SIZE = "big";
+  const END_POINT = `${BOOK_DETAIL_URL}?ttbkey=${TTB_KEY}&cover=${IMG_SIZE}&itemIdType=ISBN&ItemId=${ISBN}&output=JS&Version=20131101&OptResult=ebookList,usedList,reviewList,ratingInfo,bestSellerRank
+  `;
+  axios({
+    method: "get",
+    url: END_POINT,
+  }).then((response) => res.send(response.data.item));
+};
+
+export const inBound = (req, res) => {
+  const QUERY_TYPE = "ItemNewAll";
+  const IMG_SIZE = "big";
+  const SEARCH_TARGET = "Book";
+  const TOTAL_BOOKS = "49";
+  const END_POINT = `${BASE_URL}?ttbkey=${TTB_KEY}&cover=${IMG_SIZE}&QueryType=${QUERY_TYPE}&MaxResults=${TOTAL_BOOKS}&start=1&SearchTarget=${SEARCH_TARGET}&output=JS&Version=20131101`;
+  axios({
+    method: "get",
+    url: END_POINT,
+  }).then((response) => res.send(response.data.item));
+};
+
+export const outBound = (req, res) => {
+  const QUERY_TYPE = "ItemNewAll";
+  const IMG_SIZE = "big";
+  const SEARCH_TARGET = "Foreign";
+  const TOTAL_BOOKS = "49";
+  const END_POINT = `${BASE_URL}?ttbkey=${TTB_KEY}&cover=${IMG_SIZE}&QueryType=${QUERY_TYPE}&MaxResults=${TOTAL_BOOKS}&start=1&SearchTarget=${SEARCH_TARGET}&output=JS&Version=20131101`;
+  axios({
+    method: "get",
+    url: END_POINT,
+  }).then((response) => res.send(response.data.item));
+};
+
+export const music = (req, res) => {
+  const QUERY_TYPE = "ItemNewAll";
+  const IMG_SIZE = "big";
+  const SEARCH_TARGET = "Music";
+  const TOTAL_BOOKS = "49";
+  const END_POINT = `${BASE_URL}?ttbkey=${TTB_KEY}&cover=${IMG_SIZE}&QueryType=${QUERY_TYPE}&MaxResults=${TOTAL_BOOKS}&start=1&SearchTarget=${SEARCH_TARGET}&output=JS&Version=20131101`;
+  axios({
+    method: "get",
+    url: END_POINT,
+  }).then((response) => res.send(response.data.item));
+};
+
+export const dvd = (req, res) => {
+  const QUERY_TYPE = "ItemNewAll";
+  const IMG_SIZE = "big";
+  const SEARCH_TARGET = "DVD";
+  const TOTAL_BOOKS = "49";
+  const END_POINT = `${BASE_URL}?ttbkey=${TTB_KEY}&cover=${IMG_SIZE}&QueryType=${QUERY_TYPE}&MaxResults=${TOTAL_BOOKS}&start=1&SearchTarget=${SEARCH_TARGET}&output=JS&Version=20131101`;
+  axios({
+    method: "get",
+    url: END_POINT,
+  }).then((response) => res.send(response.data.item));
+};
+
+export const used = (req, res) => {
+  const QUERY_TYPE = "ItemNewAll";
+  const IMG_SIZE = "big";
+  const SEARCH_TARGET = "Used";
+  const TOTAL_BOOKS = "49";
+  const SUB_TARGET = "Book";
+  const END_POINT = `${BASE_URL}?ttbkey=${TTB_KEY}&cover=${IMG_SIZE}&QueryType=${QUERY_TYPE}&MaxResults=${TOTAL_BOOKS}&SubSearchTarget=${SUB_TARGET}&start=1&SearchTarget=${SEARCH_TARGET}&output=JS&Version=20131101`;
+  axios({
+    method: "get",
+    url: END_POINT,
+  }).then((response) => res.send(response.data.item));
+};
+
+export const eBook = (req, res) => {
+  const QUERY_TYPE = "ItemNewAll";
+  const IMG_SIZE = "big";
+  const SEARCH_TARGET = "eBook";
+  const TOTAL_BOOKS = "49";
+  const END_POINT = `${BASE_URL}?ttbkey=${TTB_KEY}&cover=${IMG_SIZE}&QueryType=${QUERY_TYPE}&MaxResults=${TOTAL_BOOKS}&start=1&SearchTarget=${SEARCH_TARGET}&output=JS&Version=20131101`;
+  axios({
+    method: "get",
+    url: END_POINT,
+  }).then((response) => res.send(response.data.item));
+};
+
+export const search = (req, res) => {
+  const QUERY = "python"; // 넘어온 값
+  const QUERY_TYPE = "Title"; // Title, Author, Title+Author, Publisher
+  const MAX_RESULT = 49;
+  const SEARCH_TARGET = "Book"; // Foreign, Music, DVD, Used, eBook, All
+  const IMG_SIZE = "Big";
+
+  const END_POINT = `${BOOK_SEARCH_URL}?ttbkey=${TTB_KEY}&Query=${QUERY}&QueryType=${QUERY_TYPE}&MaxResults=${MAX_RESULT}&start=1&SearchTarget=${SEARCH_TARGET}&output=JS&Version=20131101&Cover=${IMG_SIZE}`;
   axios({
     method: "get",
     url: END_POINT,

@@ -1,9 +1,10 @@
 import express from "express";
+import { getJoin, postJoin, postLogin } from "../controllers/userController";
 
 const userRouter = express.Router();
 
-const handleUser = (req, res) => res.send("dkjasldfjda;sf");
-
-userRouter.get("/", handleUser);
+userRouter.get("/test", (req, res) => res.send("user test"));
+userRouter.route("/signup").get(getJoin).post(postJoin);
+userRouter.post("/login", postLogin);
 
 export default userRouter;

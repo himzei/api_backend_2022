@@ -1,22 +1,8 @@
-import express from "express";
-import morgan from "morgan";
-import cors from "cors";
-import apiRouter from "./routers/apiRouter";
-
-const app = express();
-
-// app.set("view engine", "json");
-app.use(cors());
-app.use(morgan("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-const handleHome = (req, res) => res.send("home");
-
-app.get("/", handleHome);
-app.use("/api/v1", apiRouter);
+import "./db";
+import "./models/User";
+import app from "./server";
 
 const handleListening = () =>
-  console.log(`Server listening on port http://localhost:${PORT}`);
+  console.log(`Server listening on port http://localhost`);
 
-app.listen(process.env.PORT || 3000, handleListening);
+app.listen(process.env.PORT || 4000, handleListening);
