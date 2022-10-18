@@ -1,7 +1,12 @@
-export const localsMiddleware = (req, res, next) => {
-  res.locals.loggedIn = Boolean(req.session.loggedIn);
-  res.locals.siteName = "알라딘 중고서점 리뉴얼";
-  res.locals.loggedInUser = req.session.user;
-  console.log(res.locals);
-  next();
+import { jwt } from "jsonwebtoken";
+
+export const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  if (token == null) return res.sendStatus(401);
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
 };

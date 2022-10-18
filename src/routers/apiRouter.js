@@ -31,7 +31,7 @@ apiRouter.get("/music", music);
 apiRouter.get("/dvd", dvd);
 apiRouter.get("/used", used);
 apiRouter.get("/eBook", eBook);
-apiRouter.get("/search/:term", search);
-apiRouter.get("/test", (req, res) => res.send("api v1 test"));
+apiRouter.get("/search", search);
+apiRouter.get("/test", (req, res) => res.send("hello"));
 
 export default apiRouter;

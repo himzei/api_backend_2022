@@ -171,7 +171,8 @@ export const eBook = (req, res) => {
 };
 
 export const search = (req, res) => {
-  const QUERY = "python"; // 넘어온 값
+  const { term } = req.query;
+  const QUERY = term;
   const QUERY_TYPE = "Title"; // Title, Author, Title+Author, Publisher
   const MAX_RESULT = 49;
   const SEARCH_TARGET = "Book"; // Foreign, Music, DVD, Used, eBook, All

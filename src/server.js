@@ -5,13 +5,14 @@ import MongoStore from "connect-mongo";
 import cors from "cors";
 import apiRouter from "./routers/apiRouter";
 import userRouter from "./routers/userRouter";
-import { localsMiddleware } from "./middlewares";
+import { authenticateToken } from "./middlewares";
 
 const app = express();
 
 // app.set("view engine", "json");
 app.use(cors());
 app.use(morgan("dev"));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -30,7 +31,7 @@ app.use(
 //   });
 // });
 
-app.use(localsMiddleware);
+// app.use(authenticateToken);
 app.get("/", (req, res) => res.send("Home"));
 app.use("/users", userRouter);
 app.use("/api/v1", apiRouter);
