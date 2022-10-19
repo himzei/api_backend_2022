@@ -1,17 +1,22 @@
-"use strict";
+import express from "express";
+import { itemNewAll, itemNewSpecial, bestseller, blogBest, bookDetail, inBound, outBound, music, used, dvd, eBook, search, bestsellerLastMonth, bestsellerLastYear } from "../controllers/apiController";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = void 0;
-var _express = _interopRequireDefault(require("express"));
-var _apiController = require("../controllers/apiController");
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-var apiRouter = _express["default"].Router();
-apiRouter.get("/itemNewAll", _apiController.itemNewAll);
-apiRouter.get("/itemNewSpecial", _apiController.itemNewSpecial);
-apiRouter.get("/itemEditorChoice", _apiController.itemEditorChoice);
-apiRouter.get("/bestseller", _apiController.bestseller);
-apiRouter.get("/blogBest", _apiController.blogBest);
-var _default = apiRouter;
-exports["default"] = _default;
+const apiRouter = express.Router();
+
+apiRouter.get("/itemNewAll", itemNewAll);
+apiRouter.get("/itemNewSpecial", itemNewSpecial);
+apiRouter.get("/bestseller", bestseller);
+apiRouter.get("/bestsellerlastmonth", bestsellerLastMonth);
+apiRouter.get("/bestsellerlastyear", bestsellerLastYear);
+apiRouter.get("/blogBest", blogBest);
+apiRouter.get("/book/:id", bookDetail);
+apiRouter.get("/inbound", inBound);
+apiRouter.get("/outbound", outBound);
+apiRouter.get("/music", music);
+apiRouter.get("/dvd", dvd);
+apiRouter.get("/used", used);
+apiRouter.get("/eBook", eBook);
+apiRouter.get("/search", search);
+apiRouter.get("/test", (req, res) => res.send("hello"));
+
+export default apiRouter;

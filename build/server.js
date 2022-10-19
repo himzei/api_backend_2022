@@ -1,26 +1,37 @@
-"use strict";
+import express from "express";
+import morgan from "morgan";
+import session from "express-session";
+import MongoStore from "connect-mongo";
+import cors from "cors";
+import apiRouter from "./routers/apiRouter";
+import userRouter from "./routers/userRouter";
+import { authenticateToken } from "./middlewares";
 
-var _express = _interopRequireDefault(require("express"));
-var _morgan = _interopRequireDefault(require("morgan"));
-var _cors = _interopRequireDefault(require("cors"));
-var _apiRouter = _interopRequireDefault(require("./routers/apiRouter"));
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-var PORT = 5000;
-var app = (0, _express["default"])();
+const app = express();
 
 // app.set("view engine", "json");
-app.use((0, _cors["default"])());
-app.use((0, _morgan["default"])("dev"));
-app.use(_express["default"].json());
-app.use(_express["default"].urlencoded({
-  extended: true
+app.use(cors());
+app.use(morgan("dev"));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(session({
+  secret: "hello",
+  resave: true,
+  saveUninitialized: true,
+  store: MongoStore.create({ mongoUrl: "mongodb://127.0.0.1:27017/aladin" })
 }));
-var handleHome = function handleHome(req, res) {
-  return res.send("home");
-};
-app.get("/", handleHome);
-app.use("/api/v1", _apiRouter["default"]);
-var handleListening = function handleListening() {
-  return console.log("Server listening on port http://localhost:".concat(PORT));
-};
-app.listen(PORT, handleListening);
+
+// app.use((req, res, next) => {
+//   req.sessionStore.all((error, sessions) => {
+//     next();
+//   });
+// });
+
+// app.use(authenticateToken);
+app.get("/", (req, res) => res.send("Home"));
+app.use("/users", userRouter);
+app.use("/api/v1", apiRouter);
+
+export default app;
