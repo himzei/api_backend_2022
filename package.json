@@ -1,6 +1,10 @@
 {
   "name": "api_backend",
   "version": "1.0.0",
+  "engines": {
+    "node": "14.x",
+    "npm": "8.x"
+  },
   "scripts": {
     "start": "node build/init.js",
     "build:server": "babel src -d build",
