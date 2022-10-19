@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start": "node build/init.js",
-    "build:server": "babel src -d build",
+    "build": "babel src -d build",
     "dev": "nodemon --exec babel-node src/init.js"
   },
   "repository": {
