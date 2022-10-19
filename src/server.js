@@ -5,7 +5,6 @@ import MongoStore from "connect-mongo";
 import cors from "cors";
 import apiRouter from "./routers/apiRouter";
 import userRouter from "./routers/userRouter";
-import { authenticateToken } from "./middlewares";
 
 const app = express();
 
@@ -20,7 +19,7 @@ app.use(
   session({
     secret: "hello",
     resave: true,
-    saveUninitialized: true,
+    saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: "mongodb://127.0.0.1:27017/aladin" }),
   })
 );

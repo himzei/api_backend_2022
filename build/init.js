@@ -1,8 +1,13 @@
-import "dotenv/config";
-import "./db";
-import "./models/User";
-import app from "./server";
+"use strict";
 
-const handleListening = () => console.log(`Server listening on port http://localhost`);
-
-app.listen(process.env.PORT || 5000, handleListening);
+require("regenerator-runtime");
+require("dotenv/config");
+require("./db");
+require("./models/User");
+var _server = _interopRequireDefault(require("./server"));
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+var PORT = 4000;
+var handleListening = function handleListening() {
+  return console.log("Server listening on port http://localhost:".concat(PORT));
+};
+_server["default"].listen(PORT, handleListening);
