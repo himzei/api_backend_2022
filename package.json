@@ -6,7 +6,7 @@
     "npm": "8.x"
   },
   "scripts": {
-    "start": "babel src -d build && node build/init.js",
+    "start": "node build/init.js",
     "build": "babel src -d build",
     "dev": "nodemon --exec babel-node src/init.js"
   },
