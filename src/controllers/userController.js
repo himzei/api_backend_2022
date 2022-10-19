@@ -4,27 +4,24 @@ import User from "../models/User";
 
 export const postLogin = async (req, res) => {
   const { username, password } = req.body;
+  console.log("hello", process.env.ACCESS_SECRET);
 
   try {
     const user = await User.findOne({ username });
     if (!user) {
-      return res
-        .status(400)
-        .render("login", { errorMessage: "아이디가 없습니다." });
+      return res.json({ ok: "error", error: "아이디가 없습니다." });
     }
     const ok = await bcrypt.compare(password, user.password);
 
     if (!ok) {
-      return res.status(400).redirect("/users/login", {
-        errorMessage: "username/password 가 다릅니다.",
-      });
+      return res.json({ ok: "error", error: "아이디/패스워드가 다릅니다." });
     }
 
     const accessToken = await jwt.sign(
       { id: user.id },
-      process.env.ACCESS_TOKEN_SECRET
+      process.env.ACCESS_SECRET
     );
-    res.json({ accessToken });
+    res.header({ "auth-token": accessToken });
   } catch (error) {
     console.log(error);
   }
@@ -46,9 +43,11 @@ export const postJoin = async (req, res) => {
       username,
       email,
       password,
+      createdAt: Date.now(),
     });
     res.json({ ok: "true" });
   } catch (error) {
+    console.log(error);
     res.json({ ok: "false", error: `에러가 발생햇씁니다. ${error.code}` });
   }
 };
