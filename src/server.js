@@ -20,7 +20,7 @@ app.use(
     secret: "hello",
     resave: true,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: "mongodb://127.0.0.1:27017/aladin" }),
+    store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
   })
 );
 
