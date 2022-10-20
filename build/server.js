@@ -29,7 +29,7 @@ app.use((0, _expressSession["default"])({
   resave: true,
   saveUninitialized: false,
   store: _connectMongo["default"].create({
-    mongoUrl: "mongodb://127.0.0.1:27017/aladin"
+    mongoUrl: process.env.DB_URL
   })
 }));
 
