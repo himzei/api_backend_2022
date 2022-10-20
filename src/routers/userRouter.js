@@ -3,7 +3,6 @@ import {
   finishGithubLogin,
   postJoin,
   postLogin,
-  startGithubLogin,
 } from "../controllers/userController";
 import { authenticateToken } from "../middlewares";
 
@@ -16,7 +15,7 @@ userRouter.get("/post", authenticateToken, (req, res) => {
 userRouter.post("/signup", postJoin);
 userRouter.post("/login", postLogin);
 
-userRouter.get("/github/start", startGithubLogin);
+// userRouter.get("/github/start", startGithubLogin);
 userRouter.get("/github/callback", finishGithubLogin);
 
 export default userRouter;
