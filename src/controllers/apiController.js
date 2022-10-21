@@ -14,6 +14,16 @@ const BOOK_SEARCH_URL = `http://www.aladin.co.kr/ttb/api/ItemSearch.aspx`;
 // 리스트 수
 const RESUSTS = 7;
 
+export const blogList = (req, res) => {
+  const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
+  const BLOG_ID = "2670211976855533082";
+  const END_POINT = `https://www.googleapis.com/blogger/v3/blogs/${BLOG_ID}/posts?key=${GOOGLE_API_KEY}`;
+  axios({
+    method: "GET",
+    url: END_POINT,
+  }).then((response) => res.send(response.data.item));
+};
+
 export const itemNewAll = (req, res) => {
   const QUERY_TYPE = "ItemNewAll";
   const IMG_SIZE = "big";
