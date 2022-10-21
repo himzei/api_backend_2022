@@ -23,7 +23,7 @@ export const blogList = (req, res) => {
   axios({
     method: "GET",
     url: END_POINT,
-  }).then((response) => res.send(response.data));
+  }).then((response) => res.send(response.data.items));
 };
 
 export const itemNewAll = (req, res) => {
