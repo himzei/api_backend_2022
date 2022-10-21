@@ -21,7 +21,8 @@ userRouter.get("/post", _middlewares.authenticateToken, function (req, res) {
 });
 userRouter.post("/signup", _userController.postJoin);
 userRouter.post("/login", _userController.postLogin);
-userRouter.get("/github/start", _userController.startGithubLogin);
+
+// userRouter.get("/github/start", startGithubLogin);
 userRouter.get("/github/callback", _userController.finishGithubLogin);
 var _default = userRouter;
 exports["default"] = _default;

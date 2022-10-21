@@ -4,7 +4,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.startGithubLogin = exports.postLogin = exports.postJoin = exports.getJoin = exports.finishGithubLogin = void 0;
+exports.postLogin = exports.postJoin = exports.getJoin = exports.finishGithubLogin = void 0;
 var _bcrypt = _interopRequireDefault(require("bcrypt"));
 var _nodeFetch = _interopRequireDefault(require("node-fetch"));
 var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
@@ -145,19 +145,19 @@ var postJoin = /*#__PURE__*/function () {
     return _ref2.apply(this, arguments);
   };
 }();
+
+// export const startGithubLogin = (req, res) => {
+//   const baseUrl = `https://github.com/login/oauth/authorize`;
+//   const config = {
+//     clientId: "afeec0fffd0d2a881924",
+//     allow_signup: false,
+//     scope: "read:user user:email",
+//   };
+//   const params = new URLSearchParams(config).toString();
+//   const finalUrl = `${baseUrl}?${params}`;
+//   return res.redirect(finalUrl);
+// };
 exports.postJoin = postJoin;
-var startGithubLogin = function startGithubLogin(req, res) {
-  var baseUrl = "https://github.com/login/oauth/authorize";
-  var config = {
-    clientId: "afeec0fffd0d2a881924",
-    allow_signup: false,
-    scope: "read:user user:email"
-  };
-  var params = new URLSearchParams(config).toString();
-  var finalUrl = "".concat(baseUrl, "?").concat(params);
-  return res.redirect(finalUrl);
-};
-exports.startGithubLogin = startGithubLogin;
 var finishGithubLogin = /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(req, res) {
     var baseUrl, config, params, finalUrl, tokenRequest, access_token, userRequest;
@@ -165,6 +165,7 @@ var finishGithubLogin = /*#__PURE__*/function () {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
+            console.log(req.query.code);
             baseUrl = "https://github.com/login/oauth/access_token";
             config = {
               client_id: process.env.GH_ID,
@@ -173,40 +174,40 @@ var finishGithubLogin = /*#__PURE__*/function () {
             };
             params = new URLSearchParams(config).toString();
             finalUrl = "".concat(baseUrl, "?").concat(params);
-            _context3.next = 6;
+            _context3.next = 7;
             return (0, _nodeFetch["default"])(finalUrl, {
               method: "POST",
               headers: {
                 Accept: "application/json"
               }
             });
-          case 6:
-            _context3.next = 8;
+          case 7:
+            _context3.next = 9;
             return _context3.sent.json();
-          case 8:
+          case 9:
             tokenRequest = _context3.sent;
             if (!("access_token" in tokenRequest)) {
-              _context3.next = 19;
+              _context3.next = 20;
               break;
             }
             access_token = tokenRequest.access_token;
-            _context3.next = 13;
+            _context3.next = 14;
             return (0, _nodeFetch["default"])("https://api.github.com/user", {
               headers: {
                 Authorization: "token ".concat(access_token)
               }
             });
-          case 13:
-            _context3.next = 15;
+          case 14:
+            _context3.next = 16;
             return _context3.sent.json();
-          case 15:
+          case 16:
             userRequest = _context3.sent;
             console.log(userRequest);
-            _context3.next = 20;
+            _context3.next = 21;
             break;
-          case 19:
-            return _context3.abrupt("return", res.redirect("/login"));
           case 20:
+            return _context3.abrupt("return", res.redirect("/login"));
+          case 21:
           case "end":
             return _context3.stop();
         }

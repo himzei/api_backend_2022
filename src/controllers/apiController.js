@@ -16,12 +16,14 @@ const RESUSTS = 7;
 
 export const blogList = (req, res) => {
   const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
+  console.log(GOOGLE_API_KEY);
   const BLOG_ID = "2670211976855533082";
   const END_POINT = `https://www.googleapis.com/blogger/v3/blogs/${BLOG_ID}/posts?key=${GOOGLE_API_KEY}`;
+  // ("https://www.googleapis.com/blogger/v3/blogs/2670211976855533082/posts?key=AIzaSyASRrLYp25_5PItQW0Bxoo8A_IRAxYoSds");
   axios({
     method: "GET",
     url: END_POINT,
-  }).then((response) => res.send(response.data.item));
+  }).then((response) => res.send(response.data));
 };
 
 export const itemNewAll = (req, res) => {

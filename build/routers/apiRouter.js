@@ -22,6 +22,7 @@ apiRouter.get("/dvd", _apiController.dvd);
 apiRouter.get("/used", _apiController.used);
 apiRouter.get("/eBook", _apiController.eBook);
 apiRouter.get("/search", _apiController.search);
+apiRouter.get("/blogList", _apiController.blogList);
 apiRouter.get("/test", function (req, res) {
   return res.send("hello");
 });
