@@ -15,6 +15,7 @@ import {
   bestsellerLastMonth,
   bestsellerLastYear,
   blogList,
+  blogDetail,
 } from "../controllers/apiController";
 
 const apiRouter = express.Router();
@@ -34,6 +35,8 @@ apiRouter.get("/used", used);
 apiRouter.get("/eBook", eBook);
 apiRouter.get("/search", search);
 apiRouter.get("/blogList", blogList);
+apiRouter.get("/blog/:id", blogDetail);
+
 apiRouter.get("/test", (req, res) => res.send("hello"));
 
 export default apiRouter;
