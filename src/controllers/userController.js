@@ -66,7 +66,6 @@ export const postJoin = async (req, res) => {
 // };
 
 export const finishGithubLogin = async (req, res) => {
-  console.log(req.query.code);
   const baseUrl = "https://github.com/login/oauth/access_token";
   const config = {
     client_id: process.env.GH_ID,
