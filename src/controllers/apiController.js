@@ -27,6 +27,7 @@ export const blogList = (req, res) => {
 };
 export const blogDetail = (req, res) => {
   const { id } = req.params;
+
   const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
   const BLOG_ID = "2670211976855533082";
   const END_POINT = `https://www.googleapis.com/blogger/v3/blogs/${BLOG_ID}/posts/${id}?key=${GOOGLE_API_KEY}`;

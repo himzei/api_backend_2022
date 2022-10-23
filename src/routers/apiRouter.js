@@ -35,7 +35,7 @@ apiRouter.get("/used", used);
 apiRouter.get("/eBook", eBook);
 apiRouter.get("/search", search);
 apiRouter.get("/blogList", blogList);
-apiRouter.get("/blogDetail", blogDetail);
+apiRouter.get("/blog/:id", blogDetail);
 
 apiRouter.get("/test", (req, res) => res.send("hello"));
 
