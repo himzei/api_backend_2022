@@ -27,7 +27,7 @@ export const blogList = (req, res) => {
 };
 export const blogDetail = (req, res) => {
   const { id } = req.params;
-  console.log(id);
+  console.log("안녕월드", id);
 
   const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
   const BLOG_ID = "2670211976855533082";
@@ -36,7 +36,7 @@ export const blogDetail = (req, res) => {
   axios({
     method: "GET",
     url: END_POINT,
-  }).then((response) => res.send(response.data.item));
+  }).then((response) => res.send(response.data));
 };
 
 export const itemNewAll = (req, res) => {
