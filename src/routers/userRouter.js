@@ -8,7 +8,6 @@ import { authenticateToken } from "../middlewares";
 
 const userRouter = express.Router();
 
-userRouter.get("/test", (req, res) => res.json({ test: "test" }));
 userRouter.get("/post", authenticateToken, (req, res) => {
   res.json(posts.filter((post) => post.username == req.user.name));
 });

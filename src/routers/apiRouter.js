@@ -37,6 +37,4 @@ apiRouter.get("/search", search);
 apiRouter.get("/blogList", blogList);
 apiRouter.get("/blog/:id", blogDetail);
 
-apiRouter.get("/test", (req, res) => res.send("hello"));
-
 export default apiRouter;
