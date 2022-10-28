@@ -1,6 +1,5 @@
 import express from "express";
 import morgan from "morgan";
-import cookieParser from "cookie-parser";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import cors from "cors";
@@ -12,7 +11,6 @@ const app = express();
 // app.set("view engine", "json");
 app.use(cors());
 app.use(morgan("dev"));
-app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
