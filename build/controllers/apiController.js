@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.used = exports.search = exports.outBound = exports.music = exports.itemNewSpecial = exports.itemNewAll = exports.inBound = exports.eBook = exports.dvd = exports.bookDetail = exports.blogList = exports.blogBest = exports.bestsellerLastYear = exports.bestsellerLastMonth = exports.bestseller = void 0;
+exports.used = exports.search = exports.outBound = exports.music = exports.itemNewSpecial = exports.itemNewAll = exports.inBound = exports.eBook = exports.dvd = exports.bookDetail = exports.blogList = exports.blogDetail = exports.blogBest = exports.bestsellerLastYear = exports.bestsellerLastMonth = exports.bestseller = void 0;
 var _axios = _interopRequireDefault(require("axios"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 // ItemNewAll : 신간 전체 리스트
@@ -17,14 +17,28 @@ var TTB_KEY = "ttbhimzei1056003";
 var BASE_URL = "http://www.aladin.co.kr/ttb/api/ItemList.aspx";
 var BOOK_DETAIL_URL = "http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx";
 var BOOK_SEARCH_URL = "http://www.aladin.co.kr/ttb/api/ItemSearch.aspx";
+
 // 리스트 수
 var RESUSTS = 7;
 var blogList = function blogList(req, res) {
   var GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
-  console.log(GOOGLE_API_KEY);
   var BLOG_ID = "2670211976855533082";
   var END_POINT = "https://www.googleapis.com/blogger/v3/blogs/".concat(BLOG_ID, "/posts?key=").concat(GOOGLE_API_KEY);
-  // ("https://www.googleapis.com/blogger/v3/blogs/2670211976855533082/posts?key=AIzaSyASRrLYp25_5PItQW0Bxoo8A_IRAxYoSds");
+  (0, _axios["default"])({
+    method: "GET",
+    url: END_POINT
+  }).then(function (response) {
+    return res.send(response.data.items);
+  });
+};
+exports.blogList = blogList;
+var blogDetail = function blogDetail(req, res) {
+  var id = req.params.id;
+  console.log("안녕월드", id);
+  var GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
+  var BLOG_ID = "2670211976855533082";
+  var END_POINT = "https://www.googleapis.com/blogger/v3/blogs/".concat(BLOG_ID, "/posts/").concat(id, "?key=").concat(GOOGLE_API_KEY);
+  // ("https://www.googleapis.com/blogger/v3/blogs/2670211976855533082/posts/2654862353680025965?key=AIzaSyASRrLYp25_5PItQW0Bxoo8A_IRAxYoSds");
   (0, _axios["default"])({
     method: "GET",
     url: END_POINT
@@ -32,7 +46,7 @@ var blogList = function blogList(req, res) {
     return res.send(response.data);
   });
 };
-exports.blogList = blogList;
+exports.blogDetail = blogDetail;
 var itemNewAll = function itemNewAll(req, res) {
   var QUERY_TYPE = "ItemNewAll";
   var IMG_SIZE = "big";

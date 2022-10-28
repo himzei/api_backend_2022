@@ -23,8 +23,6 @@ apiRouter.get("/used", _apiController.used);
 apiRouter.get("/eBook", _apiController.eBook);
 apiRouter.get("/search", _apiController.search);
 apiRouter.get("/blogList", _apiController.blogList);
-apiRouter.get("/test", function (req, res) {
-  return res.send("hello");
-});
+apiRouter.get("/blog/:id", _apiController.blogDetail);
 var _default = apiRouter;
 exports["default"] = _default;

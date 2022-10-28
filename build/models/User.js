@@ -25,6 +25,9 @@ var userSchema = new _mongoose["default"].Schema({
     type: String,
     required: true
   },
+  refresh_token: {
+    type: String
+  },
   createdAt: Date
 });
 userSchema.pre("save", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
