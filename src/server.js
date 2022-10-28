@@ -8,7 +8,6 @@ import userRouter from "./routers/userRouter";
 
 const app = express();
 
-// app.set("view engine", "json");
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
@@ -24,13 +23,6 @@ app.use(
   })
 );
 
-// app.use((req, res, next) => {
-//   req.sessionStore.all((error, sessions) => {
-//     next();
-//   });
-// });
-
-// app.use(authenticateToken);
 app.get("/", (req, res) => res.send("Home"));
 app.use("/users", userRouter);
 app.use("/api/v1", apiRouter);

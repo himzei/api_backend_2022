@@ -13,8 +13,6 @@ var _apiRouter = _interopRequireDefault(require("./routers/apiRouter"));
 var _userRouter = _interopRequireDefault(require("./routers/userRouter"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 var app = (0, _express["default"])();
-
-// app.set("view engine", "json");
 app.use((0, _cors["default"])());
 app.use((0, _morgan["default"])("dev"));
 app.use(_express["default"].urlencoded({
@@ -32,14 +30,6 @@ app.use((0, _expressSession["default"])({
     mongoUrl: process.env.DB_URL
   })
 }));
-
-// app.use((req, res, next) => {
-//   req.sessionStore.all((error, sessions) => {
-//     next();
-//   });
-// });
-
-// app.use(authenticateToken);
 app.get("/", function (req, res) {
   return res.send("Home");
 });
