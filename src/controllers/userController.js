@@ -35,20 +35,12 @@ export const postLogin = async (req, res) => {
       }
     );
 
-    const refreshToken = jwt.sign(
-      { id: user.id, username: user.username, email: user.email },
-      process.env.REFRESH_SECRET,
-      {
-        expiresIn: "7d",
-      }
-    );
-
-    res.cookie("refreshToken", refreshToken, {
+    res.cookie("accessToken", accessToken, {
       sameSite: "None",
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 7,
     });
-    res.json({ accessToken, refreshToken });
+    res.json({ accessToken });
   } catch (error) {
     console.log(error);
   }
