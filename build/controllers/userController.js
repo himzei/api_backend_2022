@@ -46,7 +46,7 @@ var getUsers = /*#__PURE__*/function () {
 exports.getUsers = getUsers;
 var postLogin = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(req, res) {
-    var _req$body, username, password, user, ok, accessToken, refreshToken;
+    var _req$body, username, password, user, ok, accessToken;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
@@ -85,34 +85,26 @@ var postLogin = /*#__PURE__*/function () {
             }, process.env.ACCESS_SECRET, {
               expiresIn: "60s"
             });
-            refreshToken = _jsonwebtoken["default"].sign({
-              id: user.id,
-              username: user.username,
-              email: user.email
-            }, process.env.REFRESH_SECRET, {
-              expiresIn: "7d"
-            });
-            res.cookie("refreshToken", refreshToken, {
+            res.cookie("accessToken", accessToken, {
               sameSite: "None",
               httpOnly: true,
               maxAge: 1000 * 60 * 60 * 24 * 7
             });
             res.json({
-              accessToken: accessToken,
-              refreshToken: refreshToken
+              accessToken: accessToken
             });
-            _context2.next = 20;
+            _context2.next = 19;
             break;
-          case 17:
-            _context2.prev = 17;
+          case 16:
+            _context2.prev = 16;
             _context2.t0 = _context2["catch"](1);
             console.log(_context2.t0);
-          case 20:
+          case 19:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[1, 17]]);
+    }, _callee2, null, [[1, 16]]);
   }));
   return function postLogin(_x3, _x4) {
     return _ref2.apply(this, arguments);
