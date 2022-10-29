@@ -3,44 +3,26 @@ import fetch from "node-fetch";
 import jwt from "jsonwebtoken";
 import User from "../models/User";
 
-export const getUsers = async (req, res) => {
-  try {
-    const users = await User.find({});
-    res.json(users);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 export const postLogin = async (req, res) => {
   const { username, password } = req.body;
+  console.log("hello", process.env.ACCESS_SECRET);
 
   try {
     const user = await User.findOne({ username });
     if (!user) {
-      return res.status(400).json({ ok: "error", error: "아이디가 없습니다." });
+      return res.json({ ok: "error", error: "아이디가 없습니다." });
     }
     const ok = await bcrypt.compare(password, user.password);
 
     if (!ok) {
-      res
-        .status(400)
-        .json({ ok: "error", error: "아이디/패스워드가 다릅니다." });
+      return res.json({ ok: "error", error: "아이디/패스워드가 다릅니다." });
     }
-    const accessToken = jwt.sign(
-      { id: user.id, username: user.username, email: user.email },
-      process.env.ACCESS_SECRET,
-      {
-        expiresIn: "60s",
-      }
-    );
 
-    res.cookie("accessToken", accessToken, {
-      sameSite: "None",
-      httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 7,
-    });
-    res.json({ accessToken });
+    const accessToken = await jwt.sign(
+      { id: user.id },
+      process.env.ACCESS_SECRET
+    );
+    res.header({ "auth-token": accessToken });
   } catch (error) {
     console.log(error);
   }
