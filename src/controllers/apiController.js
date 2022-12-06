@@ -13,7 +13,7 @@ const BOOK_DETAIL_URL = `http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx`;
 const BOOK_SEARCH_URL = `http://www.aladin.co.kr/ttb/api/ItemSearch.aspx`;
 
 // 리스트 수
-const RESUSTS = 7;
+const RESUSTS = 21;
 
 export const blogList = (req, res) => {
   const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
@@ -60,9 +60,10 @@ export const itemNewSpecial = (req, res) => {
 };
 
 export const bestseller = (req, res) => {
+  const LIMIT = 21;
   const QUERY_TYPE = "Bestseller";
   const IMG_SIZE = "big";
-  const END_POINT = `${BASE_URL}?ttbkey=${TTB_KEY}&cover=${IMG_SIZE}&QueryType=${QUERY_TYPE}&MaxResults=${RESUSTS}&start=1&SearchTarget=Book&output=JS&Version=20131101`;
+  const END_POINT = `${BASE_URL}?ttbkey=${TTB_KEY}&cover=${IMG_SIZE}&QueryType=${QUERY_TYPE}&MaxResults=${LIMIT}&start=1&SearchTarget=Book&output=JS&Version=20131101`;
   axios({
     method: "get",
     url: END_POINT,
@@ -102,9 +103,10 @@ export const bestsellerLastYear = (req, res) => {
 };
 
 export const blogBest = (req, res) => {
+  const LIMIT = 21;
   const QUERY_TYPE = "BlogBest";
   const IMG_SIZE = "big";
-  const END_POINT = `${BASE_URL}?ttbkey=${TTB_KEY}&cover=${IMG_SIZE}&QueryType=${QUERY_TYPE}&MaxResults=${RESUSTS}&start=1&SearchTarget=Book&output=JS&Version=20131101`;
+  const END_POINT = `${BASE_URL}?ttbkey=${TTB_KEY}&cover=${IMG_SIZE}&QueryType=${QUERY_TYPE}&MaxResults=${LIMIT}&start=1&SearchTarget=Book&output=JS&Version=20131101`;
   axios({
     method: "get",
     url: END_POINT,
@@ -123,11 +125,14 @@ export const bookDetail = (req, res) => {
 };
 
 export const inBound = (req, res) => {
+  const { page: START } = req.query;
+  console.log(START);
+
   const QUERY_TYPE = "ItemNewAll";
   const IMG_SIZE = "big";
   const SEARCH_TARGET = "Book";
   const TOTAL_BOOKS = "49";
-  const END_POINT = `${BASE_URL}?ttbkey=${TTB_KEY}&cover=${IMG_SIZE}&QueryType=${QUERY_TYPE}&MaxResults=${TOTAL_BOOKS}&start=1&SearchTarget=${SEARCH_TARGET}&output=JS&Version=20131101`;
+  const END_POINT = `${BASE_URL}?ttbkey=${TTB_KEY}&cover=${IMG_SIZE}&QueryType=${QUERY_TYPE}&Start=${START}&MaxResults=${TOTAL_BOOKS}&SearchTarget=${SEARCH_TARGET}&output=JS&Version=20131101`;
   axios({
     method: "get",
     url: END_POINT,

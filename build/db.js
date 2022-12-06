@@ -15,4 +15,5 @@ var handleOpen = function handleOpen() {
 db.on("error", function (error) {
   return console.log("DB Error", error);
 });
+console.log("db");
 db.once("open", handleOpen);

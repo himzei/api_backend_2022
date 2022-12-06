@@ -1,12 +1,10 @@
 import bcrypt from "bcrypt";
 import fetch from "node-fetch";
-import jwt from "jsonwebtoken";
 import User from "../models/User";
+import jwt from "jsonwebtoken";
 
 export const postLogin = async (req, res) => {
   const { username, password } = req.body;
-  console.log("hello", process.env.ACCESS_SECRET);
-
   try {
     const user = await User.findOne({ username });
     if (!user) {
@@ -18,11 +16,12 @@ export const postLogin = async (req, res) => {
       return res.json({ ok: "error", error: "아이디/패스워드가 다릅니다." });
     }
 
-    const accessToken = await jwt.sign(
-      { id: user.id },
-      process.env.ACCESS_SECRET
-    );
-    res.header({ "auth-token": accessToken });
+    const token = jwt.sign({ id: user.id }, process.env.SESSION_SECRET);
+
+    res.cookie("auth", token, { maxAge: 900000, httpOnly: true }).json({
+      ok: true,
+      token,
+    });
   } catch (error) {
     console.log(error);
   }
@@ -32,6 +31,7 @@ export const getJoin = (req, res) => res.send("Get Join");
 
 export const postJoin = async (req, res) => {
   const { username, email, password, password2 } = req.body;
+
   if (password !== password2) {
     res.json({ ok: "false", error: "입력하신 패스워드가 다릅니다." });
   }

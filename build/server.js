@@ -12,6 +12,7 @@ var _cors = _interopRequireDefault(require("cors"));
 var _apiRouter = _interopRequireDefault(require("./routers/apiRouter"));
 var _userRouter = _interopRequireDefault(require("./routers/userRouter"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+var FileStore = require("session-file-store")(_expressSession["default"]);
 var app = (0, _express["default"])();
 
 // app.set("view engine", "json");
@@ -25,19 +26,22 @@ app.use(_express["default"].urlencoded({
   extended: true
 }));
 app.use((0, _expressSession["default"])({
-  secret: "hello",
+  secret: process.env.SESSION_SECRET,
   resave: true,
-  saveUninitialized: false,
-  store: _connectMongo["default"].create({
-    mongoUrl: process.env.DB_URL
-  })
+  saveUninitialized: true,
+  cookie: {
+    secure: false
+  },
+  store: new FileStore()
+  // store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
 }));
 
-// app.use((req, res, next) => {
-//   req.sessionStore.all((error, sessions) => {
-//     next();
-//   });
-// });
+app.use(function (req, res, next) {
+  req.sessionStore.all(function (error, sessions) {
+    console.log(sessions);
+    next();
+  });
+});
 
 // app.use(authenticateToken);
 app.get("/", function (req, res) {
