@@ -27,7 +27,7 @@ export const verifyToken = (req, res, next) => {
 
 export const auth = async (req, res, next) => {
   let tokenQuery = req.headers.cookie;
-  console.log(tokenQuery);
+
   let token;
   if (tokenQuery) {
     token = tokenQuery.substring(5);

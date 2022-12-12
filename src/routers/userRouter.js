@@ -3,6 +3,8 @@ import {
   finishGithubLogin,
   postJoin,
   postLogin,
+  postLogout,
+  postToggleFav,
 } from "../controllers/userController";
 import { me } from "../me";
 import { auth, authenticateToken } from "../middlewares";
@@ -13,12 +15,12 @@ userRouter.get("/me", auth, me);
 userRouter.get("/post", authenticateToken, (req, res) => {
   res.json(posts.filter((post) => post.username == req.user.name));
 });
-userRouter.post("/login", postLogin);
+userRouter.get("/login", postLogin);
+userRouter.get("/logout", postLogout);
 userRouter.post("/signup", postJoin);
 
-userRouter.get("/test", auth, (req, res) =>
-  res.json({ "how are you?": req.cookies })
-);
+userRouter.post("/toggleFav", auth, postToggleFav);
+
 // userRouter.get("/github/start", startGithubLogin);
 userRouter.get("/github/callback", finishGithubLogin);
 

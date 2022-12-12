@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   refresh_token: { type: String },
   createdAt: Date,
+  favs: [{ type: mongoose.Schema.Types.ObjectId, ref: "Favs" }],
 });
 
 userSchema.pre("save", async function () {

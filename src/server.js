@@ -7,7 +7,12 @@ import cookieParser from "cookie-parser"; // import { auth } from "./middlewares
 
 const app = express();
 
-app.use(cors());
+let corsOptions = {
+  origin: ["http://localhost:3000", "https://aladin-renewal.netlify.app"],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));

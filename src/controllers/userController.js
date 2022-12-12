@@ -1,33 +1,34 @@
 import bcrypt from "bcrypt";
 import fetch from "node-fetch";
 import User from "../models/User";
+import Favs from "../models/Favs";
 import jwt from "jsonwebtoken";
 
-export const postLogin = async (req, res) => {
-  const { username, password } = req.body;
+export const postToggleFav = async (req, res) => {
+  console.log(req.user);
+  const { isbn, title, description, cover, pubDate, publisher } = req.body;
+
+  // Boolean 값 반환
+  // const exists = await User.exists({ _id: req.user._id });
+  // if (!exists) {
+  //   res.json({ ok: "false", error: "유저가 존재하지 않습니다." });
+  // }
   try {
-    const user = await User.findOne({ username });
-    if (!user) {
-      return res.json({ ok: "error", error: "아이디가 없습니다." });
-    }
-    const ok = await bcrypt.compare(password, user.password);
-
-    if (!ok) {
-      return res.json({ ok: "error", error: "아이디/패스워드가 다릅니다." });
-    }
-
-    const token = jwt.sign({ id: user.id }, process.env.SESSION_SECRET);
-
-    res.cookie("auth", token, { maxAge: 900000, httpOnly: true }).json({
-      ok: true,
-      token,
+    await Favs.create({
+      isbn,
+      title,
+      description,
+      cover,
+      pubDate,
+      publisher,
+      createdAt: Date.now(),
+      // owner: req.user.id,
     });
   } catch (error) {
     console.log(error);
   }
+  res.json({ ok: true });
 };
-
-export const getJoin = (req, res) => res.send("Get Join");
 
 export const postJoin = async (req, res) => {
   const { username, email, password, password2 } = req.body;
@@ -51,6 +52,39 @@ export const postJoin = async (req, res) => {
     console.log(error);
     res.json({ ok: "false", error: `에러가 발생햇씁니다. ${error.code}` });
   }
+};
+
+export const postLogin = async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.json({ ok: "error", error: "아이디가 없습니다." });
+    }
+    const ok = await bcrypt.compare(password, user.password);
+
+    if (!ok) {
+      return res.json({ ok: "error", error: "아이디/패스워드가 다릅니다." });
+    }
+
+    const token = jwt.sign({ id: user.id }, process.env.SESSION_SECRET);
+
+    res
+      .cookie("auth", token, { maxAge: 1000 * 60 * 60 * 24, httpOnly: true })
+      .json({
+        ok: true,
+        token,
+      });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const postLogout = (req, res) => {
+  console.log("sever button");
+  return res.clearCookie("auth", { path: "/", httpOnly: true }).json({
+    ok: true,
+  });
 };
 
 // export const startGithubLogin = (req, res) => {
