@@ -19,7 +19,7 @@ var BOOK_DETAIL_URL = "http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx";
 var BOOK_SEARCH_URL = "http://www.aladin.co.kr/ttb/api/ItemSearch.aspx";
 
 // 리스트 수
-var RESUSTS = 7;
+var RESUSTS = 21;
 var blogList = function blogList(req, res) {
   var GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
   var BLOG_ID = "2670211976855533082";
@@ -72,9 +72,10 @@ var itemNewSpecial = function itemNewSpecial(req, res) {
 };
 exports.itemNewSpecial = itemNewSpecial;
 var bestseller = function bestseller(req, res) {
+  var LIMIT = 21;
   var QUERY_TYPE = "Bestseller";
   var IMG_SIZE = "big";
-  var END_POINT = "".concat(BASE_URL, "?ttbkey=").concat(TTB_KEY, "&cover=").concat(IMG_SIZE, "&QueryType=").concat(QUERY_TYPE, "&MaxResults=").concat(RESUSTS, "&start=1&SearchTarget=Book&output=JS&Version=20131101");
+  var END_POINT = "".concat(BASE_URL, "?ttbkey=").concat(TTB_KEY, "&cover=").concat(IMG_SIZE, "&QueryType=").concat(QUERY_TYPE, "&MaxResults=").concat(LIMIT, "&start=1&SearchTarget=Book&output=JS&Version=20131101");
   (0, _axios["default"])({
     method: "get",
     url: END_POINT
@@ -118,9 +119,10 @@ var bestsellerLastYear = function bestsellerLastYear(req, res) {
 };
 exports.bestsellerLastYear = bestsellerLastYear;
 var blogBest = function blogBest(req, res) {
+  var LIMIT = 21;
   var QUERY_TYPE = "BlogBest";
   var IMG_SIZE = "big";
-  var END_POINT = "".concat(BASE_URL, "?ttbkey=").concat(TTB_KEY, "&cover=").concat(IMG_SIZE, "&QueryType=").concat(QUERY_TYPE, "&MaxResults=").concat(RESUSTS, "&start=1&SearchTarget=Book&output=JS&Version=20131101");
+  var END_POINT = "".concat(BASE_URL, "?ttbkey=").concat(TTB_KEY, "&cover=").concat(IMG_SIZE, "&QueryType=").concat(QUERY_TYPE, "&MaxResults=").concat(LIMIT, "&start=1&SearchTarget=Book&output=JS&Version=20131101");
   (0, _axios["default"])({
     method: "get",
     url: END_POINT
@@ -142,11 +144,13 @@ var bookDetail = function bookDetail(req, res) {
 };
 exports.bookDetail = bookDetail;
 var inBound = function inBound(req, res) {
+  var START = req.query.page;
+  console.log(START);
   var QUERY_TYPE = "ItemNewAll";
   var IMG_SIZE = "big";
   var SEARCH_TARGET = "Book";
   var TOTAL_BOOKS = "49";
-  var END_POINT = "".concat(BASE_URL, "?ttbkey=").concat(TTB_KEY, "&cover=").concat(IMG_SIZE, "&QueryType=").concat(QUERY_TYPE, "&MaxResults=").concat(TOTAL_BOOKS, "&start=1&SearchTarget=").concat(SEARCH_TARGET, "&output=JS&Version=20131101");
+  var END_POINT = "".concat(BASE_URL, "?ttbkey=").concat(TTB_KEY, "&cover=").concat(IMG_SIZE, "&QueryType=").concat(QUERY_TYPE, "&Start=").concat(START, "&MaxResults=").concat(TOTAL_BOOKS, "&SearchTarget=").concat(SEARCH_TARGET, "&output=JS&Version=20131101");
   (0, _axios["default"])({
     method: "get",
     url: END_POINT

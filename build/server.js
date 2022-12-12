@@ -6,17 +6,20 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 var _express = _interopRequireDefault(require("express"));
 var _morgan = _interopRequireDefault(require("morgan"));
-var _expressSession = _interopRequireDefault(require("express-session"));
-var _connectMongo = _interopRequireDefault(require("connect-mongo"));
 var _cors = _interopRequireDefault(require("cors"));
 var _apiRouter = _interopRequireDefault(require("./routers/apiRouter"));
 var _userRouter = _interopRequireDefault(require("./routers/userRouter"));
+var _cookieParser = _interopRequireDefault(require("cookie-parser"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-var FileStore = require("session-file-store")(_expressSession["default"]);
-var app = (0, _express["default"])();
+// import { auth } from "./middlewares";
 
-// app.set("view engine", "json");
-app.use((0, _cors["default"])());
+var app = (0, _express["default"])();
+var corsOptions = {
+  origin: ["http://localhost:3000", "https://aladin-renewal.netlify.app"],
+  credentials: true
+};
+app.use((0, _cors["default"])(corsOptions));
+app.use((0, _cookieParser["default"])());
 app.use((0, _morgan["default"])("dev"));
 app.use(_express["default"].urlencoded({
   extended: true
@@ -25,25 +28,6 @@ app.use(_express["default"].json());
 app.use(_express["default"].urlencoded({
   extended: true
 }));
-app.use((0, _expressSession["default"])({
-  secret: process.env.SESSION_SECRET,
-  resave: true,
-  saveUninitialized: true,
-  cookie: {
-    secure: false
-  },
-  store: new FileStore()
-  // store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
-}));
-
-app.use(function (req, res, next) {
-  req.sessionStore.all(function (error, sessions) {
-    console.log(sessions);
-    next();
-  });
-});
-
-// app.use(authenticateToken);
 app.get("/", function (req, res) {
   return res.send("Home");
 });

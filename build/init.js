@@ -4,6 +4,7 @@ require("regenerator-runtime");
 require("dotenv/config");
 require("./db");
 require("./models/User");
+require("./models/Favs");
 var _server = _interopRequireDefault(require("./server"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 var handleListening = function handleListening() {
