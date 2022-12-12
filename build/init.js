@@ -4,9 +4,10 @@ require("regenerator-runtime");
 require("dotenv/config");
 require("./db");
 require("./models/User");
-require("./models/Favs");
 var _server = _interopRequireDefault(require("./server"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+// import "./models/Favs";
+
 var handleListening = function handleListening() {
   return console.log("\u2705 Server listenting on http://localhost:".concat(process.env.PORT, " \uD83D\uDE80"));
 };
