@@ -1,2 +1,2 @@
-web:node build/init.js
+web: npm start
 
