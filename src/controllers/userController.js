@@ -67,10 +67,7 @@ export const postLogin = async (req, res) => {
       return res.json({ ok: "error", error: "아이디/패스워드가 다릅니다." });
     }
 
-    const token = jwt.sign(
-      { id: user.id },
-      "dEQBaJNW6MMVGcwQjGze56rGJhn6gUnwhnqzEezb"
-    );
+    const token = jwt.sign({ id: user.id }, process.env.SESSION_SECRET);
 
     res
       .cookie("auth", token, { maxAge: 1000 * 60 * 60 * 24, httpOnly: true })
@@ -105,8 +102,8 @@ export const postLogout = (req, res) => {
 export const finishGithubLogin = async (req, res) => {
   const baseUrl = "https://github.com/login/oauth/access_token";
   const config = {
-    client_id: "afeec0fffd0d2a881924",
-    client_secret: "5d943c5c9398b8b62631108c44b9a2f0a2cb772f",
+    client_id: process.env.GH_ID,
+    client_secret: process.env.GH_SECRET,
     code: req.query.code,
   };
   const params = new URLSearchParams(config).toString();

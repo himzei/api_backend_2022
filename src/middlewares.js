@@ -6,10 +6,7 @@ export const authenticateToken = (req, res, next) => {
   if (token == null) return res.status(401).send("Access Denied");
 
   try {
-    const verified = jwt.verify(
-      token,
-      "8882a5349c4de2cc80d6b11ca0c08a487fa17f276fc29f8ccce213a2dedbdcb4489e10cd7563630e5affd4d87c2d3d0dc1a37feabbd77f75ca42f65f503bd6f2"
-    );
+    const verified = jwt.verify(token, process.env.ACCESS_SECRET);
     req.user = verified;
   } catch (error) {
     res.status(400).send("Invalid Token");
@@ -21,15 +18,11 @@ export const verifyToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
   if (token == null) return res.sendStatus(401);
-  jwt.verify(
-    token,
-    "8882a5349c4de2cc80d6b11ca0c08a487fa17f276fc29f8ccce213a2dedbdcb4489e10cd7563630e5affd4d87c2d3d0dc1a37feabbd77f75ca42f65f503bd6f2",
-    (err, decoded) => {
-      if (err) return res.sendStatus(403);
-      req.email = decoded.email;
-      next();
-    }
-  );
+  jwt.verify(token, process.env.ACCESS_SECRET, (err, decoded) => {
+    if (err) return res.sendStatus(403);
+    req.email = decoded.email;
+    next();
+  });
 };
 
 export const auth = async (req, res, next) => {
@@ -44,7 +37,7 @@ export const auth = async (req, res, next) => {
 
   await jwt.verify(
     token,
-    "dEQBaJNW6MMVGcwQjGze56rGJhn6gUnwhnqzEezb",
+    process.env.SESSION_SECRET,
     async (error, decoded) => {
       if (error) {
         return res

@@ -5,9 +5,9 @@ import "./models/User";
 // import "./models/Favs";
 import app from "./server";
 
-const PORT = 8001;
-
 const handleListening = () =>
-  console.log(`✅ Server listenting on http://localhost:${PORT} 🚀`);
+  console.log(
+    `✅ Server listenting on http://localhost:${process.env.PORT} 🚀`
+  );
 
-app.listen(PORT || 5000, handleListening);
+app.listen(process.env.PORT || 5000, handleListening);
