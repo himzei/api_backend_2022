@@ -1,2 +1,2 @@
-web: node init.js
+web: node src/init.js
 
