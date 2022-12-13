@@ -16,7 +16,7 @@ const BOOK_SEARCH_URL = `http://www.aladin.co.kr/ttb/api/ItemSearch.aspx`;
 const RESUSTS = 21;
 
 export const blogList = (req, res) => {
-  const GOOGLE_API_KEY = "AIzaSyASRrLYp25_5PItQW0Bxoo8A_IRAxYoSds";
+  const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
   const BLOG_ID = "2670211976855533082";
   const END_POINT = `https://www.googleapis.com/blogger/v3/blogs/${BLOG_ID}/posts?key=${GOOGLE_API_KEY}`;
 
@@ -29,7 +29,7 @@ export const blogDetail = (req, res) => {
   const { id } = req.params;
   console.log("안녕월드", id);
 
-  const GOOGLE_API_KEY = "AIzaSyASRrLYp25_5PItQW0Bxoo8A_IRAxYoSds";
+  const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
   const BLOG_ID = "2670211976855533082";
   const END_POINT = `https://www.googleapis.com/blogger/v3/blogs/${BLOG_ID}/posts/${id}?key=${GOOGLE_API_KEY}`;
   // ("https://www.googleapis.com/blogger/v3/blogs/2670211976855533082/posts/2654862353680025965?key=AIzaSyASRrLYp25_5PItQW0Bxoo8A_IRAxYoSds");
