@@ -1,11 +1,14 @@
 import mongoose from "mongoose";
 
-mongoose.connect(process.env.DB_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
-  useCreateIndex: true,
-});
+mongoose.connect(
+  "mongodb+srv://himzei:9IKox2XtNgDNn6hY@cluster1.0e1vpkl.mongodb.net/?retryWrites=true&w=majority",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
+  }
+);
 
 const db = mongoose.connection;
 const handleOpen = () => console.log("Connected DB");
