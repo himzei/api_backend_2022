@@ -13,13 +13,6 @@ const userRouter = express.Router();
 
 userRouter.get("/me", me);
 
-userRouter.get("/login", (req, res) => {
-  if (req.session.user) {
-    res.send({ loggedIn: true, user: req.session.user });
-  } else {
-    res.send({ loggedIn: false });
-  }
-});
 userRouter.post("/login", postLogin);
 userRouter.get("/logout", postLogout);
 userRouter.post("/signup", postJoin);

@@ -70,6 +70,7 @@ export const postLogin = async (req, res) => {
     const token = jwt.sign({ id: user.id }, process.env.SESSION_SECRET);
     req.session.user = user;
     console.log(req.session.user);
+
     res.json({
       ok: true,
       token,
@@ -81,9 +82,8 @@ export const postLogin = async (req, res) => {
 
 export const postLogout = (req, res) => {
   console.log("sever button");
-  return res.clearCookie("auth", { path: "/", httpOnly: true }).json({
-    ok: true,
-  });
+
+  res.clearCookie("userId").redirect("/");
 };
 
 // export const startGithubLogin = (req, res) => {
