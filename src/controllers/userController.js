@@ -68,13 +68,12 @@ export const postLogin = async (req, res) => {
     }
 
     const token = jwt.sign({ id: user.id }, process.env.SESSION_SECRET);
-
-    res
-      .cookie("auth", token, { maxAge: 1000 * 60 * 60 * 24, httpOnly: true })
-      .json({
-        ok: true,
-        token,
-      });
+    req.session.user = user;
+    console.log(req.session.user);
+    res.json({
+      ok: true,
+      token,
+    });
   } catch (error) {
     console.log(error);
   }

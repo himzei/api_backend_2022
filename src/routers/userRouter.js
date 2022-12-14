@@ -7,13 +7,20 @@ import {
   postToggleFav,
 } from "../controllers/userController";
 import { me } from "../me";
-import { auth } from "../middlewares";
+import { auth, isLoggedIn } from "../middlewares";
 
 const userRouter = express.Router();
 
-userRouter.get("/me", auth, me);
+userRouter.get("/me", me);
 
-userRouter.get("/login", postLogin);
+userRouter.get("/login", (req, res) => {
+  if (req.session.user) {
+    res.send({ loggedIn: true, user: req.session.user });
+  } else {
+    res.send({ loggedIn: false });
+  }
+});
+userRouter.post("/login", postLogin);
 userRouter.get("/logout", postLogout);
 userRouter.post("/signup", postJoin);
 

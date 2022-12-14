@@ -25,6 +25,16 @@ export const verifyToken = (req, res, next) => {
   });
 };
 
+export const isLoggedIn = (req, res, next) => {
+  if (req.session.user) {
+    res.send({ loggedIn: true, user: req.session.user });
+  } else {
+    res.send({ loggedIn: false });
+  }
+
+  next();
+};
+
 export const auth = async (req, res, next) => {
   let tokenQuery = req.headers.cookie;
 

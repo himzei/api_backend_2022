@@ -53,7 +53,7 @@ export const itemNewSpecial = (req, res) => {
   const { page, limit } = req.query;
   const QUERY_TYPE = "ItemNewSpecial";
   const IMG_SIZE = "big";
-  const END_POINT = `${BASE_URL}?ttbkey=${TTB_KEY}&cover=${IMG_SIZE}&QueryType=${QUERY_TYPE}&MaxResults=${limit}&start=${page}&SearchTarget=Book&output=JS&Version=20131101`;
+  const END_POINT = `${BASE_URL}?ttbkey=${TTB_KEY}&cover=${IMG_SIZE}&QueryType=${QUERY_TYPE}&MaxResults=${limit}&start=${page}  &SearchTarget=Book&output=JS&Version=20131101`;
   axios({
     method: "get",
     url: END_POINT,
